@@ -1,9 +1,8 @@
 {
-  "name": "20Y PULSE V11.10.10",
-  "short_name": "20Y",
-  "id": "/20y-pulse-v11110/",
+  "name": "20Y PULSE V11",
+  "short_name": "20Y-V11",
+  "description": "CEREBRO20Y V11.10.10 - Pestañas reparadas",
   "start_url": "/20y-pulse-v11110/",
-  "scope": "/20y-pulse-v11110/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00FF00",
@@ -16,10 +15,10 @@
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-512.png", 
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ]
-} 
+}
