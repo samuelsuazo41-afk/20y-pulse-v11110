@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>20Y PULSE V11.10.10</title>
+  <meta name="theme-color" content="#00FF00">
+  <link rel="manifest" href="./manifest.json?v=11110">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: #0F0; font-family: 'Courier New', monospace; font-size: 14px; }
+  .header { background: #0F0; color: #000; text-align: center; padding: 8px; font-weight: bold; font-size: 18px; position: sticky; top: 0; z-index: 100; }
+  .nav { display: flex; overflow-x: auto; background: #000; border-bottom: 2px solid #0F0; position: sticky; top: 36px; z-index: 99; }
+  .nav::-webkit-scrollbar { display: none; }
+  .btn { background: #0F0; color: #000; border: none; padding: 10px 15px; margin: 2px; font-weight: bold; cursor: pointer; white-space: nowrap; font-family: inherit; }
+  .btn.active { background: #000; color: #0F0; border: 2px solid #0F0; }
+  .btn.danger { background: #F00; color: #000; }
+  .tab { display: none; padding: 10px; }
+  .tab.active { display: block; }
+  .card { border: 2px solid #0F0; padding: 10px; margin-bottom: 10px; }
+  .card h2 { color: #0F0; margin-bottom: 10px; font-size: 16px; }
+  .row { margin-bottom: 10px; }
+  .row label { display: block; margin-bottom: 3px; color: #0F0; }
+    input, textarea { width: 100%; background: #111; border: 1px solid #0F0; color: #0F0; padding: 8px; font-family: inherit; }
+  .stat { display: flex; justify-content: space-between; margin: 5px 0; }
+  .box { border: 1px solid #0F0; padding: 10px; margin: 10px 0; }
+  .box-title { text-align: center; margin-bottom: 5px; }
+  .footer { position: fixed; bottom: 5px; right: 5px; font-size: 10px; color: #0F0; }
+  .feedback { background: #111; border-left: 4px solid #0F0; padding: 10px; margin: 10px 0; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="header">20Y PULSE V11.10.10</div>
+  <nav class="nav">
+    <button class="btn active" data-tab="inicio">INICIO</button>
+    <button class="btn" data-tab="perfil">PERFIL</button>
+    <button class="btn" data-tab="plan">PLAN</button>
+    <button class="btn" data-tab="rituales">RITUALES</button>
+    <button class="btn" data-tab="objetivos">OBJETIVOS</button>
+    <button class="btn" data-tab="spith">SPITH</button>
+    <button class="btn" data-tab="ejecucion">EJECUCIÓN</button>
+    <button class="btn" data-tab="coach">COACH</button>
+    <button class="btn" data-tab="datos">DATOS</button>
+  </nav>
+
+  <div id="inicio" class="tab active">
+    <div class="card">
+      <h2>DASHBOARD 20Y</h2>
+      <div class="box">
+        <div class="box-title">CEO 20Y: SAMUEL</div>
+        <div class="box-title">MISIÓN 20Y:</div>
+        <div>Desbloquear Nivel 5 LEYENDA</div>
+      </div>
+      <div class="stat"><span>Día:</span><span>1 🔥</span></div>
+      <div class="stat"><span>Puntos 20Y:</span><span>0</span></div>
+      <div class="stat"><span>Nivel:</span><span>1/5</span></div>
+      <div class="stat"><span>Stability:</span><span>0%</span></div>
+      <button class="btn" onclick="ejecutarCerebro()">EJECUTAR CEREBRO20Y</button>
+    </div>
+  </div>
+
+  <div id="perfil" class="tab">
+    <div class="card">
+      <h2>PERFIL 20Y</h2>
+      <div class="row">
+        <label>NOMBRE 20Y:</label>
+        <input id="perfil-nombre" placeholder="SAMUEL SUAZO" maxlength="20">
+      </div>
+      <div class="row">
+        <label>EDAD:</label>
+        <input id="perfil-edad" type="number" placeholder="30" min="15" max="99">
+      </div>
+      <div class="row">
+        <label>PAÍS:</label>
+        <input id="perfil-pais" placeholder="ESPAÑA">
+      </div>
+      <div class="row">
+        <label>MISIÓN PERSONAL:</label>
+        <textarea id="perfil-mision" rows="3" placeholder="Construir un imperio de sistemas que facture 100K/mes antes de 2030"></textarea>
+      </div>
+      <div class="row">
+        <label>AVATAR URL:</label>
+        <input id="perfil-avatar" placeholder="https://i.imgur.com/tu-foto.png">
+      </div>
+      <button class="btn" onclick="guardarPerfil()">GUARDAR PERFIL</button>
+    </div>
+  </div>
+
+  <div id="plan" class="tab">
+    <div class="card">
+      <h2>PLAN 20Y</h2>
+      <div class="row"><label>MISIÓN ANUAL:</label><textarea id="plan-mision" rows="2"></textarea></div>
+      <div class="row"><label>Q1:</label><input id="plan-q1"></div>
+      <div class="row"><label>Q2:</label><input id="plan-q2"></div>
+      <div class="row"><label>Q3:</label><input id="plan-q3"></div>
+      <div class="row"><label>Q4:</label><input id="plan-q4"></div>
+      <button class="btn" onclick="guardarPlan()">GUARDAR PLAN</button>
+    </div>
+  </div>
+
+  <div id="rituales" class="tab">
+    <div class="card">
+      <h2>RITUALES 20Y</h2>
+      <div class="row"><label><input type="checkbox" id="ritual-am"> 6AM: Meditar + Agua + Sol</label></div>
+      <div class="row"><label>SCORE 12PM (1-10):</label><input id="ritual-score" type="number" min="1" max="10"></div>
+      <div class="row"><label><input type="checkbox" id="ritual-pm"> 22PM: Reporte + Plan mañana</label></div>
+      <button class="btn" onclick="guardarRituales()">GUARDAR DÍA</button>
+    </div>
+  </div>
+
+  <div id="objetivos" class="tab">
+    <div class="card">
+      <h2>OBJETIVOS 20Y</h2>
+      <div class="row"><label>Q1:</label><input id="obj-q1" placeholder="Crear mi imperio de sistemas"></div>
+      <div class="row"><label>Q2:</label><input id="obj-q2"></div>
+      <div class="row"><label>Q3:</label><input id="obj-q3"></div>
+      <div class="row"><label>Q4:</label><input id="obj-q4"></div>
+      <button class="btn" onclick="guardarObjetivos()">GUARDAR OBJETIVOS</button>
+    </div>
+  </div>
+
+  <div id="spith" class="tab">
+    <div class="card">
+      <h2>SPITH 20Y</h2>
+      <div class="feedback" id="spith-texto">BUILD CARS. MASTER DRIVING. Son las 6AM y ya gané.</div>
+      <button class="btn" onclick="generarSpith()">GENERAR SPITH</button>
+    </div>
+  </div>
+
+  <div id="ejecucion" class="tab">
+    <div class="card">
+      <h2>EJECUCIÓN 20Y</h2>
+      <div class="row"><label>TAREA #1:</label><input id="tarea1"></div>
+      <div class="row"><label>TAREA #2:</label><input id="tarea2"></div>
+      <div class="row"><label>TAREA #3:</label><input id="tarea3"></div>
+      <button class="btn" onclick="guardarTareas()">GUARDAR TAREAS</button>
+    </div>
+  </div>
+
+  <div id="coach" class="tab">
+    <div class="card">
+      <h2>COACH 20Y</h2>
+      <div class="feedback" id="coach-feedback">FEEDBACK V11.10.10\nActiva rituales 6AM o Hard Reset mañana.</div>
+      <button class="btn" onclick="generarCoaching()">PEDIR COACHING</button>
+    </div>
+  </div>
+
+  <div id="datos" class="tab">
+    <div class="card">
+      <h2>DATOS 20Y</h2>
+      <textarea id="datos-texto" rows="6" placeholder="Estoy dando el todo..."></textarea>
+      <button class="btn" onclick="exportBackup()">EXPORT BACKUP.JSON</button>
+      <button class="btn" onclick="document.getElementById('import-file').click()">IMPORT BACKUP</button>
+      <input type="file" id="import-file" style="display:none" onchange="importBackup(event)">
+      <button class="btn danger" onclick="borrarTodo()">BORRAR TODO</button>
+    </div>
+  </div>
+
+  <div class="footer">V11.10.10 | SW v24-8</div>
+
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js?v=11110');}
+
+function getState() {
+  const s = localStorage.getItem('20y-state');
+  return s? JSON.parse(s) : { dia:1, puntos:0, perfil:{nombre:'SAMUEL',edad:'30',pais:'ESPAÑA',mision:'',avatar:''}, plan:{mision:'Desbloquear Nivel 5 LEYENDA',q1:'',q2:'',q3:'',q4:''}, rituales:{}, objetivos:{q1:'',q2:'',q3:'',q4:''}, tareas:['','',''], feedback:'', datos:'' };
+}
+
+function saveState(s) {
+  localStorage.setItem('20y-state', JSON.stringify(s));
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav.btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  if(tab === 'perfil') renderPerfil();
+  if(tab === 'inicio') renderInicio();
+  if(tab === 'plan') renderPlan();
+  if(tab === 'objetivos') renderObjetivos();
+  if(tab === 'datos') renderDatos();
+}
+
+document.querySelectorAll('.nav.btn').forEach(b => {
+  b.onclick = () => showTab(b.dataset.tab);
+});
+
+function calcularStability() {
+  const s = getState();
+  const hoy = new Date().toISOString().split('T')[0];
+  const rit = s.rituales[hoy] || {am:false,score:0,pm:false};
+  let total = 0, hechos = 0;
+  if(rit.am) hechos++; total++;
+  if(rit.score >= 7) hechos++; total++;
+  if(rit.pm) hechos++; total++;
+  return total > 0? Math.round((hechos/total)*100) : 0;
+}
+
+function renderInicio() {
+  const s = getState();
+  document.querySelector('#inicio.card').innerHTML = `
+    <h2>DASHBOARD 20Y</h2>
+    <div class="box">
+      <div class="box-title">CEO 20Y: ${s.perfil?.nombre || 'SAMUEL'}</div>
+      <div class="box-title">MISIÓN 20Y:</div>
+      <div>${s.plan.mision || 'Desbloquear Nivel 5 LEYENDA'}</div>
+    </div>
+    <div class="stat"><span>Día:</span><span>${s.dia} 🔥</span></div>
+    <div class="stat"><span>Puntos 20Y:</span><span>${s.puntos}</span></div>
+    <div class="stat"><span>Nivel:</span><span>${Math.floor(s.puntos/100)+1}/5</span></div>
+    <div class="stat"><span>Stability:</span><span>${calcularStability()}%</span></div>
+    <button class="btn" onclick="ejecutarCerebro()">EJECUTAR CEREBRO20Y</button>
+  `;
+}
+
+function ejecutarCerebro() {
+  const s = getState();
+  s.puntos += 10;
+  saveState(s);
+  renderInicio();
+  alert('CEREBRO20Y EJECUTADO +10 PUNTOS');
+}
+
+function guardarPerfil() {
+  const s = getState();
+  s.perfil = {
+    nombre: document.getElementById('perfil-nombre').value || 'SAMUEL',
+    edad: document.getElementById('perfil-edad').value || '30',
+    pais: document.getElementById('perfil-pais').value || 'ESPAÑA',
+    mision: document.getElementById('perfil-mision').value || 'Crear mi imperio',
+    avatar: document.getElementById('perfil-avatar').value || ''
+  };
+  saveState(s);
+  alert('PERFIL 20Y GUARDADO ✅');
+  renderInicio();
+}
+
+function renderPerfil() {
+  const s = getState();
+  if(!s.perfil) s.perfil = {nombre:'SAMUEL',edad:'30',pais:'ESPAÑA',mision:'',avatar:''};
+  document.getElementById('perfil-nombre').value = s.perfil.nombre;
+  document.getElementById('perfil-edad').value = s.perfil.edad;
+  document.getElementById('perfil-pais').value = s.perfil.pais;
+  document.getElementById('perfil-mision').value = s.perfil.mision;
+  document.getElementById('perfil-avatar').value = s.perfil.avatar;
+}
+
+function guardarPlan() {
+  const s = getState();
+  s.plan = {
+    mision: document.getElementById('plan-mision').value,
+    q1: document.getElementById('plan-q1').value,
+    q2: document.getElementById('plan-q2').value,
+    q3: document.getElementById('plan-q3').value,
+    q4: document.getElementById('plan-q4').value
+  };
+  saveState(s);
+  alert('PLAN 20Y GUARDADO ✅');
+}
+
+function renderPlan() {
+  const s = getState();
+  document.getElementById('plan-mision').value = s.plan.mision || '';
+  document.getElementById('plan-q1').value = s.plan.q1 || '';
+  document.getElementById('plan-q2').value = s.plan.q2 || '';
+  document.getElementById('plan-q3').value = s.plan.q3 || '';
+  document.getElementById('plan-q4').value = s.plan.q4 || '';
+}
+
+function guardarRituales() {
+  const s = getState();
+  const hoy = new Date().toISOString().split('T')[0];
+  s.rituales[hoy] = {
+    am: document.getElementById('ritual-am').checked,
+    score: parseInt(document.getElementById('ritual-score').value) || 0,
+    pm: document.getElementById('ritual-pm').checked
+  };
+  saveState(s);
+  alert('RITUALES GUARDADOS ✅');
+  renderInicio();
+}
+
+function guardarObjetivos() {
+  const s = getState();
+  s.objetivos = {
+    q1: document.getElementById('obj-q1').value,
+    q2: document.getElementById('obj-q2').value,
+    q3: document.getElementById('obj-q3').value,
+    q4: document.getElementById('obj-q4').value
+  };
+  saveState(s);
+  alert('OBJETIVOS 20Y GUARDADOS ✅');
+}
+
+function renderObjetivos() {
+  const s = getState();
+  document.getElementById('obj-q1').value = s.objetivos.q1 || '';
+  document.getElementById('obj-q2').value = s.objetivos.q2 || '';
+  document.getElementById('obj-q3').value = s.objetivos.q3 || '';
+  document.getElementById('obj-q4').value = s.objetivos.q4 || '';
+}
+
+function generarSpith() {
+  const s = getState();
+  const nombre = s.perfil?.nombre || 'SAMUEL';
+  const spiths = [
+    `BUILD CARS. MASTER DRIVING. Soy ${nombre}. Son las 6AM y ya gané. Mientras ellos duermen, yo construyo mi legado. Si fallo 1 regla hoy, vuelvo a Día 0. Skin in the game.`,
+    `${nombre}: 6AM o pierdes. Tu imperio no se construye con excusas. Disciplina militar o muerte.`,
+    `Día ${s.dia}. ${nombre} en modo LEYENDA. Stability ${calcularStability()}%. Si no duele, no funciona.`
+  ];
+  const spith = spiths[Math.floor(Math.random() * spiths.length)];
+  document.getElementById('spith-texto').innerText = spith;
+  navigator.clipboard.writeText(spith);
+  alert('SPITH copiado ✅');
+}
+
+function guardarTareas() {
+  const s = getState();
+  s.tareas = [
+    document.getElementById('tarea1').value,
+    document.getElementById('tarea2').value,
+    document.getElementById('tarea3').value
+  ];
+  saveState(s);
+  alert('TAREAS GUARDADAS ✅');
+}
+
+function generarCoaching() {
+  const s = getState();
+  const hoy = new Date().toISOString().split('T')[0];
+  const rit = s.rituales[hoy] || {am:false,score:0,pm:false};
+  const nombre = s.perfil?.nombre || 'SAMUEL';
+  const stability = calcularStability();
+
+  let feedback = `FEEDBACK V11.10.10\nStability ${stability}%. `;
+
+  if(stability === 0) {
+    feedback += `DÍA 0 DETECTADO, ${nombre}. Sin rituales 6AM = sin control del día.\n`;
+    feedback += `Tu misión: "${s.perfil?.mision || s.objetivos.q1 || 'Crear imperio'}" requiere disciplina militar.\n`;
+    feedback += `ACCIÓN 20Y: Hard Reset mañana. 1) Alarma 5:55AM 2) Móvil fuera del cuarto 3) Meditar 10min.\n`;
+    feedback += `Si fallas, vuelves a Día 0. Skin in the game, ${nombre}.`;
+  }
+  else if(stability < 40) {
+    feedback += `MODO SUPERVIVENCIA,
